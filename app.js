@@ -16,8 +16,11 @@ const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 // show images 
 const showImages = (images) => {
   if (images == 0) {
-    console.log("images not here tui bolod")
+    document.getElementById("search-result").innerHTML = `<h2 class="text-center bg-danger p-2 text-white">Sorry '${document.getElementById('search').value}' images is not found</h2>`
+    imagesArea.style.display = 'none'
+    stopPropagation();
   }
+  document.getElementById("search-result").innerHTML = '';
   imagesArea.style.display = 'block';
   gallery.innerHTML = '';
   // show gallery title
