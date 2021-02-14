@@ -15,6 +15,9 @@ const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 // show images 
 const showImages = (images) => {
+  if (images == 0) {
+    console.log("images not here tui bolod")
+  }
   imagesArea.style.display = 'block';
   gallery.innerHTML = '';
   // show gallery title
@@ -38,13 +41,13 @@ const getImages = (query) => {
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  element.classList.add('added');
- 
+  element.classList.toggle('added');
+
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    sliders = sliders.filter(sliders => sliders != img)
   }
 }
 var timer
@@ -113,6 +116,12 @@ const changeSlide = (index) => {
 
   items[index].style.display = "block"
 }
+// press enter key for search
+document.getElementById('search').addEventListener("keypress", function (event) {
+  if (event.key == 'Enter') {
+    searchBtn.click()
+  }
+})
 
 searchBtn.addEventListener('click', function () {
   document.querySelector('.main').style.display = 'none';
