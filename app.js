@@ -18,6 +18,7 @@ const showImages = (images) => {
   if (images == 0) {
     document.getElementById("search-result").innerHTML = `<h2 class="text-center bg-danger p-2 text-white">Sorry '${document.getElementById('search').value}' images is not found</h2>`
     imagesArea.style.display = 'none'
+    toggleSpiner(false)
     stopPropagation();
   }
   document.getElementById("search-result").innerHTML = '';
@@ -30,11 +31,13 @@ const showImages = (images) => {
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
+    toggleSpiner(false)
   })
 
 }
 
 const getImages = (query) => {
+  toggleSpiner(true)
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
@@ -132,8 +135,20 @@ searchBtn.addEventListener('click', function () {
   const search = document.getElementById('search');
   getImages(search.value)
   sliders.length = 0;
+  document.getElementById('search').value =''
 })
 
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
+
+// spinner function
+const toggleSpiner = (load) => {
+  const spinner = document.getElementById("show-spinner")
+  if(load){
+  spinner.classList.remove('d-none');
+}
+else{
+  spinner.classList.add('d-none');
+}
+}
